@@ -59,6 +59,7 @@ class Data extends AbstractHelper
      * Check if locale is a Right-to-Left locale
      *
      * @return boolean
+     * @api
      */
     public function isRtl($locale = null)
     {

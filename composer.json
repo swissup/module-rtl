@@ -1,6 +1,6 @@
 {
     "name": "swissup/rtl",
-    "description": "RTL detection based on current locale",
+    "description": "Magento2 RTL detection",
     "keywords": [
         "rtl"
     ],
@@ -11,14 +11,6 @@
         "files": [ "registration.php" ],
         "psr-4": {
             "Swissup\\Rtl\\": ""
-        }
-    },
-    "extra": {
-        "swissup": {
-            "links": {
-                "docs"     : "http://docs.swissuplabs.com/m2/extensions/rtl/",
-                "changelog": "http://docs.swissuplabs.com/m2/extensions/rtl/changelog/"
-            }
         }
     }
 }
