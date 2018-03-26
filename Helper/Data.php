@@ -68,10 +68,6 @@ class Data extends AbstractHelper
 
         list($language, $country) = explode('_', $locale);
 
-        if (array_key_exists($language, $this->rtlLanguages)) {
-            return true;
-        }
-
-        return false;
+        return array_key_exists($language, $this->rtlLanguages);
     }
 }
