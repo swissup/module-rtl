@@ -32,6 +32,8 @@ class Data extends AbstractHelper
         'yi'  => 'Yiddish',
     ];
 
+    private $memo = [];
+
     /**
      * Constructor
      *
@@ -67,8 +69,14 @@ class Data extends AbstractHelper
             $locale = $this->getLocale();
         }
 
-        list($language, $country) = explode('_', $locale);
+        if (!isset($this->memo[$locale])) {
+            list($language, $country) = explode('_', $locale);
+            $this->memo[$locale] = array_key_exists(
+                $language,
+                $this->rtlLanguages
+            );
+        }
 
-        return array_key_exists($language, $this->rtlLanguages);
+        return $this->memo[$locale];
     }
 }
