@@ -132,8 +132,7 @@ class AssetSource
     {
         if ($this->context instanceof \Magento\Framework\View\Asset\File\FallbackContext) {
             return $this->context;
-        } else {
-            return $this->staticContext;
         }
+        return $this->staticContext;
     }
 }
