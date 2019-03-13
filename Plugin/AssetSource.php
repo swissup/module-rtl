@@ -27,6 +27,16 @@ class AssetSource
     private $staticContext;
 
     /**
+     * @var \Magento\Framework\View\Asset\LocalInterface
+     */
+    private $asset;
+
+    /**
+     * @var mixed
+     */
+    private $context;
+
+    /**
      * @param \Swissup\Rtl\Helper\Data $helper
      * @param \Magento\Framework\View\Asset\PreProcessor\AlternativeSource\AssetBuilder $assetBuilder
      * @param \Magento\Framework\View\Asset\Source $assetSource
@@ -45,23 +55,37 @@ class AssetSource
     }
 
     /**
-     * Replace self::PLACEHOLDER inside result with mortl mixins.
+     * Magento 2.2 compatibility. $asset doesn't exists in "after" methods.
      *
-     * @param mixed $subject
-     * @param mixed $result
+     * @param \Magento\Framework\View\Asset\Source $subject
+     * @param \Magento\Framework\View\Asset\LocalInterface $asset
      * @return mixed
      */
-    public function afterGetContent($subject, $result)
-    {
-        if (strpos($result, self::PLACEHOLDER) !== false) {
+    public function beforeGetContent(
+        \Magento\Framework\View\Asset\Source $subject,
+        \Magento\Framework\View\Asset\LocalInterface $asset
+    ) {
+        $this->asset = $asset;
+        $this->context = $asset->getContext();
+
+        return [$asset];
+    }
+
+    /**
+     * Replace self::PLACEHOLDER inside result with mortl mixins.
+     *
+     * @param \Magento\Framework\View\Asset\Source $subject
+     * @param string $result
+     * @return bool|string
+     */
+    public function afterGetContent(
+        \Magento\Framework\View\Asset\Source $subject,
+        $result
+    ) {
+        if ($result && strpos($result, self::PLACEHOLDER) !== false) {
             $vars = $this->getVars();
             $mixins = $this->getMixins();
-
-            $result = str_replace(
-                self::PLACEHOLDER,
-                $vars . $mixins,
-                $result
-            );
+            $result = str_replace(self::PLACEHOLDER, $vars . $mixins, $result);
         }
 
         return $result;
@@ -72,7 +96,7 @@ class AssetSource
      */
     private function getVars()
     {
-        if ($this->helper->isRtl()) {
+        if ($this->helper->isRtl($this->getContext()->getLocale())) {
             $path = 'css/_vars_rtl.less';
         } else {
             $path = 'css/_vars_ltr.less';
@@ -96,11 +120,20 @@ class AssetSource
     private function getAsset($path)
     {
         return $this->assetBuilder
-            ->setArea($this->staticContext->getAreaCode())
-            ->setTheme($this->staticContext->getThemePath())
-            ->setLocale($this->staticContext->getLocale())
+            ->setArea($this->getContext()->getAreaCode())
+            ->setTheme($this->getContext()->getThemePath())
+            ->setLocale($this->getContext()->getLocale())
             ->setModule('Swissup_Rtl')
             ->setPath($path)
             ->build();
+    }
+
+    private function getContext()
+    {
+        if ($this->context instanceof \Magento\Framework\View\Asset\File\FallbackContext) {
+            return $this->context;
+        } else {
+            return $this->staticContext;
+        }
     }
 }
