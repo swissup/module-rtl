@@ -4,7 +4,7 @@ namespace Swissup\Rtl\Plugin;
 
 class AssetSource
 {
-    const PLACEHOLDER = '// @modrtl;';
+    const PLACEHOLDER = '// @modrtl';
 
     /**
      * @var \Swissup\Rtl\Helper\Data
