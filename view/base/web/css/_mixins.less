@@ -1,0 +1,261 @@
+//
+// Direction
+// ______________________________________________
+.direction {
+    .modrtl-css(direction, @modrtl-dir);
+}
+
+//
+// Background
+// ______________________________________________
+.background-position(@ltrValue, @rtlValue) {
+    .modrtl(background-position, @ltrValue, @rtlValue);
+}
+
+//
+// Padding
+// ______________________________________________
+.padding-left(@distance) {
+    .modrtl-css(~"padding-@{modrtl-dir-left}", @distance);
+}
+.padding-right(@distance) {
+    .modrtl-css(~"padding-@{modrtl-dir-right}", @distance);
+}
+.padding(@value) {
+    .modrtl-sides(padding, @value);
+}
+
+//
+// Margin
+// ______________________________________________
+.margin-left(@distance) {
+    .modrtl-css(~"margin-@{modrtl-dir-left}", @distance);
+}
+.margin-right(@distance) {
+    .modrtl-css(~"margin-@{modrtl-dir-right}", @distance);
+}
+.margin(@value) {
+    .modrtl-sides(margin, @value);
+}
+
+//
+// Float
+// ______________________________________________
+.float(@direction, @important: '') {
+    & when (@direction = left) {
+        .modrtl-css(float, @modrtl-dir-left e(@important));
+    }
+    & when (@direction = right) {
+        .modrtl-css(float, @modrtl-dir-right e(@important));
+    }
+    & when (@direction = none) {
+        .modrtl-css(float, @direction);
+    }
+}
+
+//
+// Text align
+// ______________________________________________
+.text-align(@direction) {
+    & when (@direction = left) {
+        .modrtl-css(text-align, @modrtl-dir-left);
+    }
+    & when (@direction = right) {
+        .modrtl-css(text-align, @modrtl-dir-right);
+    }
+    & when (@direction = center) {
+        .modrtl-css(text-align, @direction);
+    }
+}
+
+//
+// Clear
+// ______________________________________________
+.clear(@direction) {
+    & when (@direction = left) {
+        .modrtl-css(clear, @modrtl-dir-left);
+    }
+    & when (@direction = right) {
+        .modrtl-css(clear, @modrtl-dir-right);
+    }
+    & when (@direction = both) {
+        .modrtl-css(clear, @direction);
+    }
+}
+
+//
+// Left / Right
+// ______________________________________________
+.left(@distance) {
+    & when (@modrtl-dir = ltr) {
+        .modrtl-css(left, @distance);
+    }
+    & when (@modrtl-dir = rtl) {
+        .modrtl-css(right, @distance);
+    }
+}
+.right(@distance) {
+    & when (@modrtl-dir = ltr) {
+        .modrtl-css(right, @distance);
+    }
+    & when (@modrtl-dir = rtl) {
+        .modrtl-css(left, @distance);
+    }
+}
+
+//
+// Border
+// ______________________________________________
+.border-left-width(@width) {
+    .modrtl-css(~"border-@{modrtl-dir-left}-width", @width);
+}
+.border-right-width(@width) {
+    .modrtl-css(~"border-@{modrtl-dir-right}-width", @width);
+}
+.border-width(@value) {
+    .modrtl-sides(border-width, @value);
+}
+
+.border-left-style(@style) {
+    .modrtl-css(~"border-@{modrtl-dir-left}-style", @style);
+}
+.border-right-style(@style) {
+    .modrtl-css(~"border-@{modrtl-dir-right}-style", @style);
+}
+.border-style(@value) {
+    .modrtl-sides(border-style, @value);
+}
+
+.border-left-color(@color) {
+    .modrtl-css(~"border-@{modrtl-dir-left}-color", @color);
+}
+.border-right-color(@color) {
+    .modrtl-css(~"border-@{modrtl-dir-right}-color", @color);
+}
+.border-color(@value) {
+    .modrtl-sides(border-color, @value);
+}
+
+.border-left(@border-style) {
+    .modrtl-css(~"border-@{modrtl-dir-left}", @border-style);
+}
+.border-right(@border-style) {
+    .modrtl-css(~"border-@{modrtl-dir-right}", @border-style);
+}
+
+.border-top-left-radius(@radius) {
+    .modrtl-css(~"border-top-@{modrtl-dir-left}-radius", @radius);
+}
+.border-top-right-radius(@radius) {
+    .modrtl-css(~"border-top-@{modrtl-dir-right}-radius", @radius);
+}
+.border-bottom-left-radius(@radius) {
+    .modrtl-css(~"border-bottom-@{modrtl-dir-left}-radius", @radius);
+}
+.border-bottom-right-radius(@radius) {
+    .modrtl-css(~"border-bottom-@{modrtl-dir-right}-radius", @radius);
+}
+.border-right-radius(@radius) {
+    .border-top-right-radius(@radius);
+    .border-bottom-right-radius(@radius);
+}
+.border-left-radius(@radius) {
+    .border-top-left-radius(@radius);
+    .border-bottom-left-radius(@radius);
+}
+.border-top-radius(@radius) {
+    .border-top-left-radius(@radius);
+    .border-top-right-radius(@radius);
+}
+.border-bottom-radius(@radius) {
+    .border-bottom-left-radius(@radius);
+    .border-bottom-right-radius(@radius);
+}
+.border-radius(@value) {
+    & when (length(@value) = 1) {
+        .modrtl-css(border-radius, @value);
+    }
+    & when (length(@value) = 2) {
+        @topLeft: extract(@value, 1);
+        @topRight: extract(@value, 2);
+
+        & when (@modrtl-dir = ltr) {
+            .modrtl-css(border-radius, @topLeft @topRight);
+        }
+        & when (@modrtl-dir = rtl) {
+            .modrtl-css(border-radius, @topRight @topLeft);
+        }
+    }
+    & when (length(@value) = 3) {
+        @topLeft: extract(@value, 1);
+        @topRight: extract(@value, 2);
+        @bottomRight: extract(@value, 3);
+
+        & when (@modrtl-dir = ltr) {
+            .modrtl-css(border-radius, @topLeft @topRight @bottomRight);
+        }
+        & when (@modrtl-dir = rtl) {
+            .modrtl-css(border-radius, @topRight @topLeft @bottomRight);
+        }
+    }
+    & when (length(@value) = 4) {
+        @topLeft: extract(@value, 1);
+        @topRight: extract(@value, 2);
+        @bottomRight: extract(@value, 3);
+        @bottomLeft: extract(@value, 4);
+
+        & when (@modrtl-dir = ltr) {
+            .modrtl-css(border-radius, @topLeft @topRight @bottomRight @bottomLeft);
+        }
+        & when (@modrtl-dir = rtl) {
+            .modrtl-css(border-radius, @topRight @topLeft @bottomLeft @bottomRight);
+        }
+    }
+}
+
+//
+// Helpers for internal usage
+// ______________________________________________
+.modrtl-css(@property, @value) when not (@value = '')
+    and not (@value = false)
+    and not (extract(@value, 1) = false)
+    and not (extract(@value, 2) = false)
+    and not (extract(@value, 3) = false)
+    and not (extract(@value, 4) = false)
+    and not (extract(@value, 5) = false) {
+
+    @{property}: @value;
+}
+
+.modrtl-sides(@property, @value) {
+    & when not (length(@value) = 4) {
+        .modrtl-css(@property, @value);
+    }
+    & when (length(@value) = 4) {
+        @top: extract(@value, 1);
+        @right: extract(@value, 2);
+        @bottom: extract(@value, 3);
+        @left: extract(@value, 4);
+
+        & when (@modrtl-dir = ltr) {
+            .modrtl-css(@property, @top @right @bottom @left);
+        }
+        & when (@modrtl-dir = rtl) {
+            .modrtl-css(@property, @top @left @bottom @right);
+        }
+    }
+}
+
+// Shorthand for any property
+//  .modrtl(background-position, 100% 50%, 0 50%);
+//  .modrtl(background-position, ~"calc(100% - 20px) 45%", 20px 45%);
+//  .modrtl(background-position, ~"100% 50%, 0 0", ~"0 50%, 100% 0");
+//  .modrtl(display, block, none);
+.modrtl(@property, @ltrValue, @rtlValue) {
+    & when (@modrtl-dir = ltr) {
+        .modrtl-css(@property, @ltrValue);
+    }
+    & when (@modrtl-dir = rtl) {
+        .modrtl-css(@property, @rtlValue);
+    }
+}
