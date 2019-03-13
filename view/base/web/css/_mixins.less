@@ -24,6 +24,9 @@
 .padding(@value) {
     .modrtl-sides(padding, @value);
 }
+.padding(@top, @right, @bottom: '', @left: '') {
+    .padding(@top @right @bottom @left);
+}
 
 //
 // Margin
@@ -36,6 +39,9 @@
 }
 .margin(@value) {
     .modrtl-sides(margin, @value);
+}
+.margin(@top, @right, @bottom: '', @left: '') {
+    .margin(@top @right @bottom @left);
 }
 
 //
@@ -115,6 +121,9 @@
 .border-width(@value) {
     .modrtl-sides(border-width, @value);
 }
+.border-width(@top, @right, @bottom: '', @left: '') {
+    .border-width(@top @right @bottom @left);
+}
 
 .border-left-style(@style) {
     .modrtl-css(~"border-@{modrtl-dir-left}-style", @style);
@@ -125,6 +134,9 @@
 .border-style(@value) {
     .modrtl-sides(border-style, @value);
 }
+.border-style(@top, @right, @bottom: '', @left: '') {
+    .border-style(@top @right @bottom @left);
+}
 
 .border-left-color(@color) {
     .modrtl-css(~"border-@{modrtl-dir-left}-color", @color);
@@ -134,6 +146,9 @@
 }
 .border-color(@value) {
     .modrtl-sides(border-color, @value);
+}
+.border-color(@top, @right, @bottom: '', @left: '') {
+    .border-color(@top @right @bottom @left);
 }
 
 .border-left(@border-style) {
@@ -211,6 +226,9 @@
             .modrtl-css(border-radius, @topRight @topLeft @bottomLeft @bottomRight);
         }
     }
+}
+.border-radius(@topRight, @topLeft, @bottomRight: '', @bottomLeft: '') {
+    .border-radius(@topRight @topLeft @bottomRight @bottomLeft);
 }
 
 //
