@@ -128,6 +128,14 @@ class AssetSource
             ->build();
     }
 
+    /**
+     * Try to use context from current asset as it will have correct locale.
+     *
+     * Had troubles with 'staticContext' when 'store' cookie has rtl store code,
+     * but client is browsing non-rtl store with '?___store=' parameter.
+     *
+     * @return mixed
+     */
     private function getContext()
     {
         if ($this->context instanceof \Magento\Framework\View\Asset\File\FallbackContext) {
