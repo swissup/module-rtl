@@ -5,7 +5,7 @@
         "rtl"
     ],
     "type": "magento2-module",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "license": "MIT",
     "autoload": {
         "files": [ "registration.php" ],
