@@ -4,6 +4,17 @@
 .direction() {
     .modrtl-css(direction, @modrtl-dir);
 }
+.direction(@value) {
+    & when (@modrtl-dir = ltr) {
+        .modrtl-css(direction, @value);
+    }
+    & when (@modrtl-dir = rtl) and (@value = ltr) {
+        .modrtl-css(direction, rtl);
+    }
+    & when (@modrtl-dir = rtl) and (@value = rtl) {
+        .modrtl-css(direction, ltr);
+    }
+}
 
 //
 // Background
