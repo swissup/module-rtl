@@ -27,11 +27,6 @@ class AssetSource
     private $staticContext;
 
     /**
-     * @var \Magento\Framework\View\Asset\LocalInterface
-     */
-    private $asset;
-
-    /**
      * @var mixed
      */
     private $context;
@@ -55,37 +50,23 @@ class AssetSource
     }
 
     /**
-     * Magento 2.2 compatibility. $asset doesn't exists in "after" methods.
+     * After is not used for Magento 2.2 compatibility.
+     * (Params are not passed in "after" methods)
      *
-     * @param \Magento\Framework\View\Asset\Source $subject
-     * @param \Magento\Framework\View\Asset\LocalInterface $asset
+     * @param mixed $subject
+     * @param callable $proceed
      * @return mixed
      */
-    public function beforeGetContent(
+    public function aroundGetContent(
         \Magento\Framework\View\Asset\Source $subject,
+        callable $proceed,
         \Magento\Framework\View\Asset\LocalInterface $asset
     ) {
-        $this->asset = $asset;
-        $this->context = $asset->getContext();
+        $result = $proceed($asset);
 
-        return [$asset];
-    }
-
-    /**
-     * Replace self::PLACEHOLDER inside result with mortl mixins.
-     *
-     * @param \Magento\Framework\View\Asset\Source $subject
-     * @param string $result
-     * @return bool|string
-     */
-    public function afterGetContent(
-        \Magento\Framework\View\Asset\Source $subject,
-        $result
-    ) {
         if ($result && strpos($result, self::PLACEHOLDER) !== false) {
-            $vars = $this->getVars();
-            $mixins = $this->getMixins();
-            $result = str_replace(self::PLACEHOLDER, $vars . $mixins, $result);
+            $this->context = $asset->getContext();
+            $result = str_replace(self::PLACEHOLDER, $this->getContent(), $result);
         }
 
         return $result;
@@ -94,7 +75,7 @@ class AssetSource
     /**
      * @return string
      */
-    private function getVars()
+    private function getContent()
     {
         if ($this->helper->isRtl($this->getContext()->getLocale())) {
             $path = 'css/_vars_rtl.less';
@@ -102,15 +83,10 @@ class AssetSource
             $path = 'css/_vars_ltr.less';
         }
 
-        return $this->assetSource->getContent($this->getAsset($path));
-    }
+        $vars = $this->assetSource->getContent($this->getAsset($path));
+        $mixins = $this->assetSource->getContent($this->getAsset('css/_mixins.less'));
 
-    /**
-     * @return string
-     */
-    private function getMixins()
-    {
-        return $this->assetSource->getContent($this->getAsset('css/_mixins.less'));
+        return $vars . $mixins;
     }
 
     /**
