@@ -47,12 +47,12 @@
 //
 // Float
 // ______________________________________________
-.float(@direction, @important: '') {
+.float(@direction) {
     & when (@direction = left) {
-        .modrtl-css(float, @modrtl-dir-left e(@important));
+        .modrtl-css(float, @modrtl-dir-left);
     }
     & when (@direction = right) {
-        .modrtl-css(float, @modrtl-dir-right e(@important));
+        .modrtl-css(float, @modrtl-dir-right);
     }
     & when (@direction = none) {
         .modrtl-css(float, @direction);
