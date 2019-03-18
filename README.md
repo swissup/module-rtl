@@ -8,8 +8,10 @@ themes.
 <!-- MarkdownTOC autolink="true" style="ordered" -->
 
 1. [Installation](#installation)
-1. [Usage](#usage)
+    1. [Get the sources](#get-the-sources)
     1. [Add a dependency](#add-a-dependency)
+    1. [Create inject point for mixins](#create-inject-point-for-mixins)
+1. [Usage](#usage)
     1. [CSS class](#css-class)
     1. [Less mixins](#less-mixins)
     1. [PHP helper](#php-helper)
@@ -20,30 +22,51 @@ themes.
 
 ## Installation
 
+### Get the sources
+
 ```bash
 composer require swissup/module-rtl
 bin/magento module:enable Swissup_Rtl
 bin/magento setup:upgrade
 ```
 
-## Usage
-
 ### Add a dependency
 
-If you want to use this module, you must add a requirement to your module's
-composer.json file:
+If you want to use this module, you must add a requirement to your composer.json
+file:
 
 ```json
 {
     "require": {
-        "swissup/module-rtl": "^1.2.0"
+        "swissup/module-rtl": "^1.3.0"
     }
 }
 ```
 
+### Create inject point for mixins
+
+> This step is optional.
+
+ 1. Create `_modrtl.less` inside your module or theme with the following content:
+
+    ```less
+    // The comment below is required. The module will replace it with its own mixins.
+    // @modrtl
+    ```
+
+ 2. Open your `less` file, import created `_modrtl.less` file, and save it:
+
+    ```less
+    @import '_modrtl.less';
+
+    ...
+    ```
+
+## Usage
+
 ### CSS class
 
-The first thing the module do — is adding `rtl` class name to the body element
+Module automatically adds `rtl` class name to the body element
 when current language is detected as RTL. This allows you to write plain
 RTL-specific styles in your css/less files:
 
@@ -57,30 +80,32 @@ RTL-specific styles in your css/less files:
 }
 ```
 
-Be careful! _While this approach is nice for the small files, it becomes a headache
-when dealing with large portion of css that should be adjusted._
+While this approach is nice for the small files, it becomes a headache
+when dealing with large portion of css that should be adjusted. Additionally,
+this approach make your style files larger.
+
+We recommend to use [mixins](#less-mixins) for the best experience.
 
 ### Less mixins
 
-Secondly, you can inject a set of useful mixins into your less styles and use
-them without splitting LTR and RTL styles! This approach allows to keep original
-size of generated css file and doesn't bloat your sources with separate styles for
-RTL languages:
+> [Inject point](#create-inject-point-for-mixins) is required to use mixins.
+
+A set of useful mixins can be injected into your less styles! This approach
+allows to keep original size of generated css file and doesn't bloat your
+sources with separate styles for RTL languages:
 
 ```less
-// The comment below is required. It will inject modrtl mixins.
-// @modrtl
+@import '_modrtl.less';
 
 .my-element {
-    .right(20px);
+    .right(20px); // Will generate "right: 20px;" for LTR, and "left: 20px;" for RTL.
 }
 ```
 
-Can't use mixins? Use `@modrtl-dir` variable in `& when` statements:
+Don't like mixins? Use `@modrtl-dir` variable in `& when` statements:
 
 ```less
-// The comment below is required. It will inject modrtl mixins.
-// @modrtl
+@import '_modrtl.less';
 
 .my-element {
     right: 20px;
