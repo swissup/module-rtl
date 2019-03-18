@@ -60,6 +60,7 @@ class Data extends AbstractHelper
     /**
      * Check if locale is a Right-to-Left locale
      *
+     * @param  string|null $locale
      * @return boolean
      * @api
      */

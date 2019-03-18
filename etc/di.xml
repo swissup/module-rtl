@@ -4,4 +4,7 @@
     <type name="Magento\Framework\View\Asset\Source">
         <plugin name="swissup_rtl" type="Swissup\Rtl\Plugin\AssetSource" />
     </type>
+    <type name="Magento\Framework\App\View\Asset\Publisher">
+        <plugin name="swissup_rtl" type="Swissup\Rtl\Plugin\AssetPublisher" />
+    </type>
 </config>
