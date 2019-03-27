@@ -3,30 +3,31 @@
 namespace Swissup\Rtl\Plugin;
 
 use Swissup\Rtl\Model\MixinsRenderer;
+use Swissup\Rtl\Model\MixinsRendererFactory;
 use Magento\Framework\App\Filesystem\DirectoryList;
 
 class AssetPublisher
 {
     /**
-     * @var MixinsRenderer
+     * @var MixinsRendererFactory
      */
-    private $mixinsRenderer;
+    private $mixinsRendererFactory;
 
     /**
-     * @param MixinsRenderer $mixinsRenderer
+     * @param MixinsRendererFactory $mixinsRendererFactory
      * @param \Magento\Framework\Filesystem\Driver\File $fileDriver
      * @param \Magento\Framework\Filesystem $filesystem
      * @param \Magento\Framework\App\View\Asset\MaterializationStrategy\Copy $copyFile
      * @param \Magento\Framework\Filesystem\Directory\WriteFactory $writeFactory
      */
     public function __construct(
-        MixinsRenderer $mixinsRenderer,
+        MixinsRendererFactory $mixinsRendererFactory,
         \Magento\Framework\Filesystem\Driver\File $fileDriver,
         \Magento\Framework\Filesystem $filesystem,
         \Magento\Framework\App\View\Asset\MaterializationStrategy\Copy $copyFile,
         \Magento\Framework\Filesystem\Directory\WriteFactory $writeFactory
     ) {
-        $this->mixinsRenderer = $mixinsRenderer;
+        $this->mixinsRendererFactory = $mixinsRendererFactory;
         $this->fileDriver = $fileDriver;
         $this->filesystem = $filesystem;
         $this->copyFile = $copyFile;
@@ -71,7 +72,7 @@ class AssetPublisher
         ) {
             $contents = str_replace(
                 MixinsRenderer::PLACEHOLDER,
-                $this->mixinsRenderer->render($asset->getContext()),
+                $this->mixinsRendererFactory->create()->render($asset->getContext()),
                 $contents
             );
 

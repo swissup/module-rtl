@@ -3,20 +3,21 @@
 namespace Swissup\Rtl\Plugin;
 
 use Swissup\Rtl\Model\MixinsRenderer;
+use Swissup\Rtl\Model\MixinsRendererFactory;
 
 class AssetSource
 {
     /**
-     * @var MixinsRenderer
+     * @var MixinsRendererFactory
      */
-    private $mixinsRenderer;
+    private $mixinsRendererFactory;
 
     /**
-     * @param MixinsRenderer $mixinsRenderer
+     * @param MixinsRendererFactory $mixinsRendererFactory
      */
-    public function __construct(MixinsRenderer $mixinsRenderer)
+    public function __construct(MixinsRendererFactory $mixinsRendererFactory)
     {
-        $this->mixinsRenderer = $mixinsRenderer;
+        $this->mixinsRendererFactory = $mixinsRendererFactory;
     }
 
     /**
@@ -43,7 +44,7 @@ class AssetSource
         ) {
             $result = str_replace(
                 MixinsRenderer::PLACEHOLDER,
-                $this->mixinsRenderer->render($asset->getContext()),
+                $this->mixinsRendererFactory->create()->render($asset->getContext()),
                 $result
             );
         }
