@@ -35,8 +35,12 @@ class AssetSource
     ) {
         $result = $proceed($asset);
 
-        $filepath = $asset->getSourceFile();
-        $filename = basename($filepath);
+        try {
+            $filepath = $asset->getSourceFile();
+            $filename = basename($filepath);
+        } catch (\Exception $e) {
+            return $result;
+        }
 
         if ($result &&
             strpos($filename, MixinsRenderer::FILENAME) !== false &&
