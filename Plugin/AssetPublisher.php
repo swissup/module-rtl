@@ -82,7 +82,7 @@ class AssetPublisher
             );
 
             $assetAbsolutePath = $staticDir->getAbsolutePath($assetPath);
-            if (@is_link($assetAbsolutePath)) {
+            if (is_link($assetAbsolutePath)) {
                 // delete link to empty _modrtl.less file
                 $staticDir->delete($assetPath);
 
