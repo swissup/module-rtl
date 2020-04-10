@@ -26,14 +26,13 @@ themes.
 
 ```bash
 composer require swissup/module-rtl
-bin/magento module:enable Swissup_Rtl
 bin/magento setup:upgrade
 ```
 
 ### Add a dependency
 
-If you want to use this module, you must add a requirement to your composer.json
-file:
+If you want to use RTL mixins in your module sources, you must add a
+requirement into your module or theme:
 
 ```json
 {
@@ -45,21 +44,19 @@ file:
 
 ### Create inject point for mixins
 
-> This step is optional.
+> This step is required if you want to use RTL mixins in your source code.
 
  1. Create `_modrtl.less` inside your module or theme with the following content:
 
     ```less
-    // The comment below is required. The module will replace it with its own mixins.
     // @modrtl
     ```
 
- 2. Open your `less` file, import created `_modrtl.less` file, and save it:
+ 2. Open your main `less` file, import created `_modrtl.less` file, and save it:
 
     ```less
     @import '_modrtl.less';
 
-    ...
     ```
 
 ## Usage
