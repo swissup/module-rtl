@@ -1,7 +1,24 @@
 # Magento RTL
 
-Magento module that helps to add RTL language support to your modules and
-themes.
+Magento module that helps to add RTL support to your modules and
+themes PHP and LESS sources:
+
+```less
+@import '_modrtl.less';
+
+.sidebar-popup {
+    .left(0);
+    .modrtl(transform, translateX(-100%), translateX(100%));
+
+    &.shown {
+        transform: translateX(0);
+    }
+
+    .close {
+        .right(0);
+    }
+}
+```
 
 ## Contents
 
