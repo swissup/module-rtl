@@ -123,16 +123,14 @@ Mixin                                       | Example
 .modrtl(@property, @ltrValue, @rtlValue)    | .modrtl(display, block, inline)
 .direction()                                | .direction() // will output current direction
 .direction(@value)                          | .direction(rtl)
-.background-position(@ltrValue, @rtlValue)  | .background-position(100% 50%", 0 50%)
+.background-position(@ltrValue, @rtlValue)  | .background-position(100% 50%, 0 50%)
 .text-align(@direction)                     | .text-align(left)
 **Padding**                                 |
 .padding(@value)                            | .padding(10px 25px 10px 5px)
-.padding(@top, @right, @bottom, @left)      | .padding(10px, 25px, 10px, 5px)
 .padding-left(@value)                       | .padding-left(5px)
 .padding-right(@value)                      | .padding-right(25px)
 **Margin**                                  |
 .margin(@value)                             | .margin(10px 25px 10px 5px)
-.margin(@top, @right, @bottom, @left)       | .margin(10px, 25px, 10px, 5px)
 .margin-left(@value)                        | .margin-left(5px)
 .margin-right(@value)                       | .margin-right(25px)
 **Positioning**                             |
@@ -142,23 +140,19 @@ Mixin                                       | Example
 .right(@distance)                           | .right(20px)
 **Border**                                  |
 .border-radius(@value)                      | .border-radius(5px 0 0 5px)
-.border-radius(@topRight, @topLeft, @bottomRight, @bottomLeft)  | .border-radius(5px, 0, 0, 5px)
-.border-[top\|right\|bottom\|left]-radius(@radius)              | .border-top-radius(5px)
-.border-[top\|bottom]-[left\|right]-radius(@radius)             | .border-top-left-radius(5px)
+.border-[top\|right\|bottom\|left]-radius(@radius)  | .border-top-radius(5px)
+.border-[top\|bottom]-[left\|right]-radius(@radius) | .border-top-left-radius(5px)
 .border-left(@border-style)                 | .border-left(1px solid #f4f4f4);
 .border-right(@border-style)                | .border-right(1px solid #f4f4f4);
 .border-color(@value)                       | .border-color(#f4f4f4 transparent #eee #f4f4f4)
-.border-color(@top, @right, @bottom, @left) | .border-color(#f4f4f4, transparent, #eee, #f4f4f4)
 .border-left-color(@color)                  | .border-left-color(#f4f4f4)
 .border-right-color(@color)                 | .border-right-color(transparent)
 .border-style(@value)                       | .border-style(dotted dashed none solid)
-.border-style(@top, @right, @bottom, @left) | .border-style(dotted, dashed, none, solid)
 .border-left-style(@style)                  | .border-left-style(solid)
 .border-right-style(@style)                 | .border-right-style(none)
 .border-width(@value)                       | .border-width(1px 0 1px 2px)
-.border-width(@top, @right, @bottom, @left) | .border-width(1px, 0, 1px, 2px)
 .border-left-width(@width)                  | .border-left-width(0)
-.border-right-width(@width)                 | .border-left-width(2px)
+.border-right-width(@width)                 | .border-right-width(2px)
 
 ### PHP helper
 
