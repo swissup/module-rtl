@@ -21,20 +21,16 @@ class AssetSource
     }
 
     /**
-     * After is not used for Magento 2.2 compatibility.
-     * (Params are not passed in "after" methods)
-     *
-     * @param mixed $subject
-     * @param callable $proceed
-     * @return mixed
+     * @param \Magento\Framework\View\Asset\Source $subject
+     * @param bool|string $result
+     * @param \Magento\Framework\View\Asset\LocalInterface $asset
+     * @return bool|string
      */
-    public function aroundGetContent(
+    public function afterGetContent(
         \Magento\Framework\View\Asset\Source $subject,
-        callable $proceed,
+        $result,
         \Magento\Framework\View\Asset\LocalInterface $asset
     ) {
-        $result = $proceed($asset);
-
         try {
             $filepath = $asset->getSourceFile();
             $filename = basename($filepath);

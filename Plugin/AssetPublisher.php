@@ -37,20 +37,16 @@ class AssetPublisher
     /**
      * Grunt tasks compatibility. Inject modrtl mixins into '_modrtl.less' files.
      *
-     * After is not used for Magento 2.2 compatibility.
-     * (Params are not passed in "after" methods)
-     *
      * @param \Magento\Framework\App\View\Asset\Publisher $subject
-     * @param callable $proceed
+     * @param bool $result
      * @param \Magento\Framework\View\Asset\LocalInterface $asset
      * @return bool
      */
-    public function aroundPublish(
+    public function afterPublish(
         \Magento\Framework\App\View\Asset\Publisher $subject,
-        callable $proceed,
+        $result,
         \Magento\Framework\View\Asset\LocalInterface $asset
     ) {
-        $result = $proceed($asset);
         if (!$result) {
             return $result;
         }
