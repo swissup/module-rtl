@@ -14,6 +14,26 @@ class AssetPublisher
     private $mixinsRendererFactory;
 
     /**
+     * @var \Magento\Framework\Filesystem\Driver\File
+     */
+    private $fileDriver;
+
+    /**
+     * @var \Magento\Framework\Filesystem
+     */
+    private $filesystem;
+
+    /**
+     * @var \Magento\Framework\App\View\Asset\MaterializationStrategy\Copy
+     */
+    private $copyFile;
+
+    /**
+     * @var \Magento\Framework\Filesystem\Directory\WriteFactory
+     */
+    private $writeFactory;
+
+    /**
      * @param MixinsRendererFactory $mixinsRendererFactory
      * @param \Magento\Framework\Filesystem\Driver\File $fileDriver
      * @param \Magento\Framework\Filesystem $filesystem
