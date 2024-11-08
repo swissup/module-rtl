@@ -71,14 +71,14 @@ class AssetPublisher
             return $result;
         }
 
+        if (strpos($asset->getFilePath(), MixinsRenderer::FILENAME) === false) {
+            return $result;
+        }
+
         try {
             $filepath = $asset->getSourceFile();
             $filename = basename($filepath);
         } catch (\Exception $e) {
-            return $result;
-        }
-
-        if (strpos($filename, MixinsRenderer::FILENAME) === false) {
             return $result;
         }
 
