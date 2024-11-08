@@ -31,17 +31,7 @@ class AssetSource
         $result,
         \Magento\Framework\View\Asset\LocalInterface $asset
     ) {
-        try {
-            $filepath = $asset->getSourceFile();
-            $filename = basename($filepath);
-        } catch (\Exception $e) {
-            return $result;
-        }
-
-        if ($result &&
-            strpos($filename, MixinsRenderer::FILENAME) !== false &&
-            strpos($result, MixinsRenderer::PLACEHOLDER) !== false
-        ) {
+        if ($result && strpos($result, MixinsRenderer::PLACEHOLDER) !== false) {
             $result = str_replace(
                 MixinsRenderer::PLACEHOLDER,
                 $this->mixinsRendererFactory->create()->render($asset->getContext()),
