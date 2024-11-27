@@ -1,80 +1,13 @@
 # Magento RTL
 
-Magento module that helps to add RTL support to your modules and
-themes PHP and LESS sources:
-
-```less
-@import '_modrtl.less';
-
-.sidebar-popup {
-    .left(0);
-    .modrtl(transform, translateX(-100%), translateX(100%));
-
-    &.shown {
-        transform: translateX(0);
-    }
-
-    .close {
-        .right(0);
-    }
-}
-```
-
-## Contents
-
-<!-- MarkdownTOC autolink="true" style="ordered" -->
-
-1. [Installation](#installation)
-    1. [Get the sources](#get-the-sources)
-    1. [Add a dependency](#add-a-dependency)
-    1. [Create inject point for mixins](#create-inject-point-for-mixins)
-1. [Usage](#usage)
-    1. [CSS class](#css-class)
-    1. [Less mixins](#less-mixins)
-    1. [PHP helper](#php-helper)
-1. [License](#license)
-1. [Credits](#credits)
-
-<!-- /MarkdownTOC -->
+Magento module that helps to add RTL support to your modules and themes.
 
 ## Installation
 
-### Get the sources
-
 ```bash
 composer require swissup/module-rtl
-bin/magento setup:upgrade
+bin/magento module:enable Swissup_Rtl
 ```
-
-### Add a dependency
-
-If you want to use RTL mixins in your module sources, you must add a
-requirement into your module or theme:
-
-```json
-{
-    "require": {
-        "swissup/module-rtl": "^1.3.0"
-    }
-}
-```
-
-### Create inject point for mixins
-
-> This step is required if you want to use RTL mixins in your source code.
-
- 1. Create `_modrtl.less` inside your module or theme with the following content:
-
-    ```less
-    // @modrtl
-    ```
-
- 2. Open your main `less` file, import created `_modrtl.less` file, and save it:
-
-    ```less
-    @import '_modrtl.less';
-
-    ```
 
 ## Usage
 
@@ -98,32 +31,34 @@ While this approach is nice for the small files, it becomes a headache
 when dealing with large portion of css that should be adjusted. Additionally,
 this approach make your style files larger.
 
-We recommend to use [mixins](#less-mixins) for the best experience.
+We recommend to use [LESS mixins](#less-mixins) for the best experience.
 
-### Less mixins
+### LESS mixins
 
-> [Inject point](#create-inject-point-for-mixins) is required to use mixins.
-
-A set of useful mixins can be injected into your less styles! This approach
-allows to keep original size of generated css file and doesn't bloat your
-sources with separate styles for RTL languages:
+This approach allows to keep minimal size of generated CSS file:
 
 ```less
-@import '_modrtl.less';
+@import 'Swissup_Rtl::css/_modrtl.less';
 
-.my-element {
-    .right(20px); // Will generate "right: 20px;" for LTR, and "left: 20px;" for RTL.
+.sidebar-popup {
+    .left(0);
+    .modrtl(transform, translateX(-100%), translateX(100%));
+
+    &.shown {
+        transform: translateX(0);
+    }
+
+    .close {
+        .right(0);
+    }
 }
 ```
 
-Don't like mixins? Use `@modrtl-dir` variable in `& when` statements:
+Additionally, you can use `@modrtl-dir` variable in `& when` statements:
 
 ```less
-@import '_modrtl.less';
+@import 'Swissup_Rtl::css/_modrtl.less';
 
-.my-element {
-    right: 20px;
-}
 & when (@modrtl-dir = rtl) {
     .my-element {
         right: auto;
@@ -135,7 +70,7 @@ Don't like mixins? Use `@modrtl-dir` variable in `& when` statements:
 **Mixins list**
 
 Mixin                                       | Example
---------------------------------------------|-----------------------------------
+:-------------------------------------------|:----------------------------------
 **Misc**                                    |
 .modrtl(@property, @ltrValue, @rtlValue)    | .modrtl(display, block, inline)
 .direction()                                | .direction() // will output current direction
@@ -173,15 +108,18 @@ Mixin                                       | Example
 
 ### PHP helper
 
-Need a serverside RTL detection? Inject `\Swissup\Rtl\Helper\Data` into your
-class and use `isRtl` method:
-
 ```php
-// Check current locale
-$helper->isRtl();
+class Example
+{
+    public function __construct(\Swissup\Rtl\Helper\Data $rtlHelper)
+    {
+        // Check current locale
+        $rtlHelper->isRtl();
 
-// Check custom locale
-$helper->isRtl('en_US');
+        // Check locale code
+        $rtlHelper->isRtl('en_US');
+    }
+}
 ```
 
 ## License
