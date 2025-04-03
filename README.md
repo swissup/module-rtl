@@ -42,7 +42,7 @@ This approach allows to keep minimal size of generated CSS file:
 
 .sidebar-popup {
     .left(0);
-    .modrtl(transform, translateX(-100%), translateX(100%));
+    .modrtl(transform, ~"translateX(-100%)", ~"translateX(100%)");
 
     &.shown {
         transform: translateX(0);
