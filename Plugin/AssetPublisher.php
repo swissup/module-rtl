@@ -98,6 +98,10 @@ class AssetPublisher
             );
 
             $assetAbsolutePath = $staticDir->getAbsolutePath($assetPath);
+            if (!$this->isInsideDir(dirname($assetAbsolutePath), $staticDir->getAbsolutePath())) {
+                return $result;
+            }
+
             if (is_link($assetAbsolutePath)) {
                 // delete link to empty _modrtl.less file
                 $staticDir->delete($assetPath);
@@ -132,5 +136,18 @@ class AssetPublisher
             $contents = false;
         }
         return $contents;
+    }
+
+    /**
+     * @param  string $path
+     * @param  string $root
+     * @return bool
+     */
+    private function isInsideDir($path, $root)
+    {
+        $path = realpath($path);
+        $root = realpath($root);
+
+        return $path && $root && strpos($path . '/', rtrim($root, '/') . '/') === 0;
     }
 }
